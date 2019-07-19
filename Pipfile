@@ -5,7 +5,6 @@ verify_ssl = true
 
 [dev-packages]
 sphinx-click = "*"
-click = "*"
 stdeb = "*"
 setuptools = "*"
 
@@ -13,6 +12,7 @@ setuptools = "*"
 tqdm = "*"
 requests = "*"
 colorama = "*"
+click = "*"
 
 [requires]
 python_version = "3.6"
