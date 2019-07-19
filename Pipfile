@@ -7,6 +7,7 @@ verify_ssl = true
 sphinx-click = "*"
 click = "*"
 stdeb = "*"
+setuptools = "*"
 
 [packages]
 tqdm = "*"

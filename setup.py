@@ -2,9 +2,11 @@
 (https://github.com/pypa/pipenv/blob/master/setup.py)
 """
 import codecs
+import json
 import os
 import pkg_resources
 import sys
+import setuptools
 from setuptools import setup, find_packages, Command
 from shutil import rmtree
 
@@ -35,7 +37,7 @@ with open(os.path.join(cwd, 'tool', '__version__.py')) as f:
     exec(f.read(), info)
 
 required = [
-    'setuptools>=36.2.1'
+    'setuptools>=36.2.1',
 ]
 extras = {
     'dev': {
@@ -45,6 +47,12 @@ extras = {
     },
     'tests': ['pytest', 'mock']
 }
+with open(os.path.join(cwd, 'Pipfile.lock')) as f:
+    data = json.load(f)
+    for item in data['default']:
+        dep = '{} {}'.format(item.strip(), data['default'][item]['version'])
+        required.append(dep)
+
 classifiers = [
    'Development Status :: 4 - Beta',
    'License :: OSI Approved :: Apache Software License',
