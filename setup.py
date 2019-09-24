@@ -100,7 +100,7 @@ class UploadCommand(Command):
         self.status('Building source distribution...')
         os.system('{} setup.py sdist bdist_wheel'.format(sys.executable))
         self.status('If we were uploading to PyPI or whatever, we\'d do it here via twine...')
-        os.system('twine upload --repository-url https://wdartifacts.sfo2.digitaloceanspaces.com dist/*')
+        # os.system('twine upload --repository-url https://pypi dist/*')
         self.status('Pushing git tags...')
         os.system('git tag v{}'.format(info['__version__']))
         os.system('git push --tags')
