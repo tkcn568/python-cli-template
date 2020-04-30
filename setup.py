@@ -137,15 +137,15 @@ class DebCommand(Command):
             pass
         self.status(u'Creating debian manifest...')
         os.system(
-            '{} setup.py --command-packages=stdeb.command sdist_dsc -z artful --package3=clitool'.format(sys.executable)
+            '{} setup.py --command-packages=stdeb.command sdist_dsc -z artful --package3={}'.format(sys.executable, info['__pkgname__'])
         )
         self.status(u'Building .deb...')
-        os.chdir('deb_dist/clitool-{}'.format(info['__version__']))
+        os.chdir('deb_dist/{}-{}'.format(info['__pkgname__'], info['__version__']))
         os.system('dpkg-buildpackage -rfakeroot -uc -us')
 
 
 setup(
-    name='clitool',
+    name=info['__pkgname__'],
     version=info['__version__'],
     description='A CLI tool for something.',
     long_description=long_description,
@@ -156,7 +156,7 @@ setup(
     packages=find_packages(exclude=['bin', 'tests', 'tests.*', 'tasks', 'tasks.*']),
     entry_points={
         'console_scripts': [
-            'clitool=tool:cli',
+            '{}={}:cli'.format(info['__pkgname__'], info['__location__']),
         ]
     },
     package_data={
