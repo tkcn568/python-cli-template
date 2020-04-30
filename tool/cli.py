@@ -20,7 +20,8 @@ from click import (
 )
 from tqdm import tqdm
 from .output import Status
-from .__version__ import __version__
+from .__version__ import (__pkgname__, __version__)
+
 
 @command()
 @option('-n',
@@ -35,7 +36,10 @@ from .__version__ import __version__
         '--messages',
         multiple=True,
         help='Messages you want to send.')
-@version_option(prog_name='{}clitool{}'.format(Style.BRIGHT, Style.RESET_ALL), version=__version__)
+@version_option(
+    prog_name='{}{}{}'.format(Style.BRIGHT, __pkgname__, Style.RESET_ALL),
+    version=__version__
+)
 @pass_context
 def cli(ctx,
         name,
