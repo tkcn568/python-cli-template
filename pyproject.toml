@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "clitool"
+version = "20210621"
+description = "A template for building command line interfaces in Python."
+authors = ["makiten"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+tqdm = "^4.61.1"
+requests = "^2.25.1"
+colorama = "^0.4.4"
+click = "^8.0.1"
+
+[tool.poetry.dev-dependencies]
+sphinx-click = "^3.0.1"
+stdeb = "^0.10.0"
+setuptools = "^57.0.0"
+pytest = "^6.2.4"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
