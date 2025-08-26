@@ -1,18 +1,18 @@
 [tool.poetry]
 name = "clitool"
-version = "20210621"
+version = "20250825"
 description = "A template for building command line interfaces in Python."
-authors = ["makiten"]
+authors = ["tkcn568"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.8"
 tqdm = "^4.61.1"
 requests = "^2.25.1"
-colorama = "^0.4.4"
 click = "^8.0.1"
+rich = "^14.1.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 sphinx-click = "^3.0.1"
 stdeb = "^0.10.0"
 setuptools = "^57.0.0"

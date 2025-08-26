@@ -14,10 +14,10 @@ import os
 import time
 import traceback
 import sys
-from colorama import Style, Fore
 from click import (
     command, echo, option, pass_context, prompt, version_option
 )
+from rich import print
 from tqdm import tqdm
 from .output import Status
 from .__version__ import (__pkgname__, __version__)
@@ -37,7 +37,7 @@ from .__version__ import (__pkgname__, __version__)
         multiple=True,
         help='Messages you want to send.')
 @version_option(
-    prog_name='{}{}{}'.format(Style.BRIGHT, __pkgname__, Style.RESET_ALL),
+    prog_name=f'[bold]{__pkgname__}[/]',
     version=__version__
 )
 @pass_context
@@ -47,37 +47,42 @@ def cli(ctx,
         messages):
     """Manages to CLI
 
-    :param ctx: Program context
-    :type ctx: Context
-    :param name: Name
-    :type name: str
-    :param flag: Flag
-    :type flag: bool
-    :param messages: Messages
-    :type messages: list(str)
+    Parameters
+    ----------
+    ctx : Context
+        Program context
+    name : str
+        Name
+    flag : bool
+        Flag
+    messages : list(str)
+        Messages
     """
     try:
-        echo('Current context: {}{}{}'.format(Style.BRIGHT, ctx.info_name, Style.RESET_ALL))
+        print(f'Current context: [bold]{ctx.info_name}[/bold]')
 
         if name == '' or name is None:
+            print(Status.error('I didn\'t find a name, so I\'m going to ask you for one.'))
             name = prompt('Please give your name', type=str)
         else:
-            echo(Status.success('Name param passed: {}'.format(name)))
-        echo('Hi {}!'.format(name))
+            print(Status.success(f'Name param passed: {name}'))
+        print(f'Hi {name}!')
 
         if flag:
-            echo(Status.info('Flag is set.'))
+            print(Status.info('Flag is set.'))
         else:
-            echo(Status.warning('No flag set.'))
+            print(Status.warning('No flag set.'))
 
         if len(messages) > 0:
-            echo(Status.info('Counted {}{}{} messages.'.format(Style.BRIGHT, len(messages), Style.RESET_ALL)))
+            print(Status.info(f'Counted {len(messages)} messages.'))
             pbar = tqdm(messages)
             for m in pbar:
                 time.sleep(0.5)
                 pbar.set_description('Processing "{}"...'.format(m))
         else:
-            echo(Status.info('No messages.'))
+            print(Status.info('No messages.'))
+
+        print(Status.success(f'Alright, {name}. Everything is done.'))
     except:
-        echo(Status.error(traceback.format_exc()))
+        print(Status.error(traceback.format_exc()))
         sys.exit(1)

@@ -7,7 +7,6 @@ Classes:
 
 - Output: A static class for sending output to stdout.
 """
-from colorama import (Back, Style)
 
 
 class Status:
@@ -30,67 +29,103 @@ class Status:
     """
 
     @staticmethod
-    def console_message(msg, output_type, color):
+    def console_message(msg: str,
+                        icon: str,
+                        prefix: str = '',
+                        styles: str = '') -> str:
         """Prepares the string message with a given color and type.
+
+        Parameters
+        ----------
+        msg : str
+            The actual message to send.
+        icon : str
+            The output type to send with the message text.
+        styles : str
+            The styles of the box denoting the output type.
         
-        :param msg: The actual message to send.
-        :type msg: str
-        :param output_type: The output type to send with the message text.
-        :type output_type: str
-        :param color: The color of the box denoting the output type.
-        :type color: colorama.Back
-        :returns: The message with output type and colored text for output type.
-        :rtype: str
+        Returns
+        -------
+        str
+            The message with output type and colored text for output type.
         """
-        output = (color
-                  + Style.BRIGHT
-                  + ' {0} '.format(output_type.upper())
-                  + Style.RESET_ALL
-                  + ' '
-                  + msg)
+        if prefix != '':
+            prefix += ' '
+        if icon != '':
+            icon = f'{icon} '
+        styles_begin = styles
+        styles_end = ""
+        if styles_begin:
+            styles_begin = f"[{styles_begin}]"
+            styles_end = "[/]"
+        output = (prefix
+                  + icon
+                  + styles_begin
+                  + msg
+                  + styles_end)
 
         return output
 
     @staticmethod
-    def error(msg):
+    def error(msg: str, prefix: str = ''):
         """Prepares error messages.
-        
-        :param msg: The actual message to send.
-        :type msg: str
-        :returns: The message with a red ERROR block preceding it.
-        :rtype: str
+
+        Parameters
+        ----------
+        msg : str
+            The actual message to send.
+
+        Returns
+        -------
+        str
+            The message with a red ERROR block preceding it.
         """
-        return Status.console_message(msg, 'error', Back.RED)
+        return Status.console_message(msg, u'\u274C', prefix, "bright_red")
 
     @staticmethod
-    def info(msg):
+    def info(msg: str, icon: str = '', prefix: str = ''):
         """Prepares informational messages.
-        
-        :param msg: The actual message to send.
-        :type msg: str
-        :returns: The message with a blue INFO block preceding it.
-        :rtype: str
+
+        Parameters
+        ----------
+        msg : str
+            The actual message to send.
+
+        Returns
+        -------
+        str
+            The message with a blue INFO block preceding it.
         """
-        return Status.console_message(msg, 'info', Back.BLUE)
+        return Status.console_message(msg, icon, prefix)
 
     @staticmethod
-    def success(msg):
+    def success(msg: str, prefix: str = ''):
         """Prepares success messages.
-        
-        :param msg: The actual message to send.
-        :type msg: str
-        :returns: The message with a green SUCCESS block preceding it.
-        :rtype: str
+
+        Parameters
+        ----------
+        msg : str
+            The actual message to send.
+
+        Returns
+        -------
+        str
+            The message with a green checkmark preceding it.
         """
-        return Status.console_message(msg, 'success', Back.GREEN)
+        return Status.console_message(msg, u'\u2705', prefix, "green")
 
     @staticmethod
-    def warning(msg):
+    def warning(msg: str, prefix: str = ''):
         """Prepares warning messages.
+
+        Parameters
+        ----------
+        msg : str
+            The actual message to send.
         
-        :param msg: The actual message to send.
-        :type msg: str
-        :returns: The message with a yellow WARNING block preceding it.
-        :rtype: str
+        Returns
+        -------
+        str
+            The message with a yellow WARNING block preceding it.
         """
-        return Status.console_message(msg, 'warning', Back.YELLOW)
+        return Status.console_message(msg, u'\u26D4', prefix, "yellow")
