@@ -2,11 +2,12 @@
 name = "python-cli-template"
 version = "20260717"
 description = "A template for building command line interfaces in Python."
+readme = "README.md"
 authors = [
     {name = "tkcn568", email = "840383+tkcn568@users.noreply.github.com"}
 ]
 license = "MIT"
-requires-python = ">=3.11"
+requires-python = ">=3.14"
 dependencies = [
     "tqdm>=4.61.1",
     "requests>=2.25.1",
@@ -30,9 +31,34 @@ dev = [
     "ruff>=0.6.0",
 ]
 
-[project.scripts]
-clitool = "cli.main:cli"
+[tool.setuptools]
+packages = ["cli"]
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+[project.scripts]
+cli = "cli.main:cli"
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+exclude = ["migrations", ".venv", ".vextract"]
+extend-exclude = ["alembic/versions"]
+
+[tool.ruff.lint]
+select = [
+  "E", "F", "I",   # pycodestyle/pyflakes/import sort
+  "B",             # flake8-bugbear
+  "UP",            # pyupgrade
+  "SIM",           # simplify
+  "RUF"            # Ruff-specific
+]
+ignore = [
+  "E203",          # formatting edge w/ slices
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.uv]
+package = true
