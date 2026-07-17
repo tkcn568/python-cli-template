@@ -224,3 +224,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Contributing
 
 Contributions are welcome! Please feel free to submit pull requests or open issues for bug reports and feature requests.
+
+### AI-Assisted Development
+
+This project may include AI-assisted contributions for documentation, testing, and docstring enhancement. See [CLAUDE.md](CLAUDE.md) for detailed guidelines on what AI systems can and cannot modify in this codebase.
