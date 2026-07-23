@@ -9,7 +9,7 @@ A modern command-line interface framework for building scalable CLI applications
 - **Modular architecture** — Organized command groups and HTTP adapters for external services
 - **End-of-Life data integration** — Example integration with the endoflife.date API for querying product lifecycle information
 - **Docker support** — Containerized deployment with Dockerfile included
-- **Modern Python packaging** — Uses Poetry for dependency management and packaging
+- **Modern Python packaging** — Uses uv for dependency management and packaging
 
 ## Installation
 
@@ -21,12 +21,12 @@ cd python-cli-template
 pip install -e .
 ```
 
-### With Poetry
+### With uv
 
 ```bash
 git clone <repository>
 cd python-cli-template
-poetry install
+uv sync
 ```
 
 ### With Docker
