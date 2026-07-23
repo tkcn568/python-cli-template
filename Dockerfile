@@ -1,17 +1,12 @@
-FROM python:3-alpine AS builder
+FROM python:3.14-slim-trixie
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
+COPY . /app
+
+ENV UV_NO_DEV=1
 WORKDIR /app
-RUN apk --no-cache add curl
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-ENV PATH="/root/.poetry/bin:${PATH}"
 
-COPY . .
+RUN uv sync --locked
 
-RUN poetry install
-RUN poetry build
-
-
-FROM python:3-alpine
-COPY --from=builder /app/dist/clitool-*.whl .
-RUN pip install ./*.whl
-CMD ['python -m clitool --help']
+RUN uv pip install -e /app
+CMD ['cli --help']
