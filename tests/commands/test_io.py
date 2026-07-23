@@ -1,6 +1,5 @@
 """Unit tests for io command group."""
 
-
 import pytest
 from click.testing import CliRunner
 
