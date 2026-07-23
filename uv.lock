@@ -229,13 +229,12 @@ wheels = [
 
 [[package]]
 name = "python-cli-template"
-version = "20260717"
+version = "20260723"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
     { name = "requests" },
     { name = "rich" },
-    { name = "tqdm" },
 ]
 
 [package.optional-dependencies]
@@ -263,7 +262,6 @@ requires-dist = [
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.6.0" },
     { name = "sphinx-click", marker = "extra == 'dev'", specifier = ">=3.0.1" },
     { name = "stdeb", marker = "extra == 'dev'", specifier = ">=0.10.0" },
-    { name = "tqdm", specifier = ">=4.61.1" },
 ]
 provides-extras = ["dev"]
 
@@ -449,18 +447,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/70/1f/64eb20d09d1a8f74f89eba4861f9632033640b4a97806a96d5958cb91232/stdeb-0.11.0.tar.gz", hash = "sha256:e7084e24f1616ab599d3f390599363b39670905179c261d23cd8ddcc0ecb3b71", size = 71166, upload-time = "2025-09-12T19:02:12.348Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a0/99/89343c1e43ef0ee966bc42651d47e8de844599d4b33b5b2a44a77ba6afc0/stdeb-0.11.0-py3-none-any.whl", hash = "sha256:3f883c522ecb76394514ea4d282eda7671c8bd0db0fd904f9774ba20e02035e6", size = 44310, upload-time = "2025-09-12T19:02:10.839Z" },
-]
-
-[[package]]
-name = "tqdm"
-version = "4.69.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/8c/69/40407dfc835517f058b603dbf37a6df094d8582b015a51eddc988febbcb7/tqdm-4.69.0.tar.gz", hash = "sha256:700c5e85dcd5f009dd6222588a29180a193a748247a5d855b4d67db93d79a53b", size = 792569, upload-time = "2026-07-17T18:09:06.2Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/fe/21/99a0cdaf54eb35e77623c41b5a2c9472ee4404bba687052791fe2aba6773/tqdm-4.69.0-py3-none-any.whl", hash = "sha256:9979978912be667a6ef21fd5d8abf54e324e63d82f7f43c360792ebc2bc4e622", size = 676680, upload-time = "2026-07-17T18:09:04.172Z" },
 ]
 
 [[package]]

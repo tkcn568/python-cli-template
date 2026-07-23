@@ -201,13 +201,13 @@ python-cli-template/
 ### Setting up the development environment
 
 ```bash
-poetry install --with dev
+uv sync --group dev
 ```
 
 ### Running tests
 
 ```bash
-pytest
+uv run pytest
 ```
 
 ### Code quality checks
@@ -215,19 +215,19 @@ pytest
 Linting with ruff:
 
 ```bash
-ruff check cli/ tests/
+uv run ruff check cli/ tests/
 ```
 
 Formatting with ruff:
 
 ```bash
-ruff format cli/ tests/
+uv run ruff format cli/ tests/
 ```
 
 ### Building the package
 
 ```bash
-poetry build
+uv build
 ```
 
 ## Architecture
@@ -251,7 +251,6 @@ Error handling uses Rich for formatted error display and Click's `Abort` excepti
 - **click** — CLI framework and command decorator system
 - **requests** — HTTP client for API requests
 - **rich** — Terminal formatting and colored output
-- **tqdm** — Progress bar support
 
 ### Development
 
