@@ -4,8 +4,9 @@ This module provides client access to the endoflife.date API, which tracks
 end-of-life dates for software products, programming languages, and frameworks.
 """
 
-import requests
 from typing import Any
+
+import requests
 
 
 class EndOfLifeAdapter:

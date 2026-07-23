@@ -41,7 +41,7 @@ docker run python-cli-template --help
 ### General command structure
 
 ```bash
-clitool [COMMAND] [OPTIONS]
+cli [COMMAND] [OPTIONS]
 ```
 
 ### Available commands
@@ -49,7 +49,7 @@ clitool [COMMAND] [OPTIONS]
 #### Version information
 
 ```bash
-clitool --version
+cli --version
 ```
 
 #### End-of-Life data queries
@@ -57,7 +57,7 @@ clitool --version
 The CLI includes a full-featured subcommand group for querying product lifecycle data:
 
 ```bash
-clitool endoflife --help
+cli endoflife --help
 ```
 
 ##### Endpoints
@@ -65,7 +65,7 @@ clitool endoflife --help
 List all available API endpoints:
 
 ```bash
-clitool endoflife endpoints
+cli endoflife endpoints
 ```
 
 ##### Products
@@ -73,25 +73,25 @@ clitool endoflife endpoints
 Query all products:
 
 ```bash
-clitool endoflife products
+cli endoflife products
 ```
 
 Query a specific product:
 
 ```bash
-clitool endoflife products --product python
+cli endoflife products --product python
 ```
 
 Query a specific product release:
 
 ```bash
-clitool endoflife products --product python --release 3.11
+cli endoflife products --product python --release 3.11
 ```
 
 Get full product details:
 
 ```bash
-clitool endoflife products --full
+cli endoflife products --full
 ```
 
 ##### Categories
@@ -99,13 +99,13 @@ clitool endoflife products --full
 List all categories:
 
 ```bash
-clitool endoflife categories
+cli endoflife categories
 ```
 
 Query a specific category:
 
 ```bash
-clitool endoflife categories --category language
+cli endoflife categories --category language
 ```
 
 ##### Tags
@@ -113,13 +113,61 @@ clitool endoflife categories --category language
 List all tags:
 
 ```bash
-clitool endoflife tags
+cli endoflife tags
 ```
 
 Query a specific tag:
 
 ```bash
-clitool endoflife tags --tag lts
+cli endoflife tags --tag lts
+```
+
+#### Interactive prompts
+
+The CLI includes an interactive command group for user engagement:
+
+```bash
+cli interact --help
+```
+
+##### Random prompts
+
+Get a random prompt and capture user input:
+
+```bash
+cli interact prompt
+```
+
+##### Name-based responses
+
+Prompt for a name and receive a personalized response:
+
+```bash
+cli interact ask
+```
+
+#### IO operations
+
+The CLI includes commands to simulate IO-related operations:
+
+```bash
+cli io --help
+```
+
+##### Simulate download
+
+Simulate downloading a file with progress indication:
+
+```bash
+cli io simulate-download myfile.txt
+```
+
+##### Simulate process
+
+Simulate processing a file with progress indication:
+
+```bash
+cli io simulate-process myfile.txt
 ```
 
 ## Project structure
@@ -134,10 +182,14 @@ python-cli-template/
 │   ├── main.py                  # Root command group
 │   ├── adapters/                # External service adapters
 │   │   ├── __init__.py
-│   │   └── endoflife.py         # endoflife.date API client
+│   │   ├── endoflife.py         # endoflife.date API client
+│   │   ├── interact.py          # Interactive prompts adapter
+│   │   └── io.py                # IO operations adapter
 │   └── commands/                # CLI command groups
 │       ├── __init__.py
-│       └── endoflife.py         # End-of-Life data commands
+│       ├── endoflife.py         # End-of-Life data commands
+│       ├── interact.py          # Interactive prompt commands
+│       └── io.py                # IO simulation commands
 ├── tests/                       # Unit tests
 ├── pyproject.toml              # Project metadata and dependencies
 ├── Dockerfile                   # Docker configuration

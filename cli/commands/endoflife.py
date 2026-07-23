@@ -10,13 +10,14 @@ import click
 from requests import HTTPError
 from requests.exceptions import ConnectionError, RequestException
 from rich.console import Console
-from rich.table import Table
 from rich.panel import Panel
+from rich.table import Table
 
 from ..adapters.endoflife import EndOfLifeAdapter
 
 adapter = EndOfLifeAdapter()
 console = Console()
+
 
 def _handle_request_error(exc: RequestException, context: str = "request") -> None:
     """Handle and display HTTP request errors.
@@ -30,23 +31,25 @@ def _handle_request_error(exc: RequestException, context: str = "request") -> No
     """
     console.print("[bold red]An error occurred connecting to the service.[/bold red]")
     if isinstance(exc, HTTPError):
-        console.print(Panel(
-            f"[bold]URL:[/bold]         {exc.response.url}\n"
-            f"[bold]Status Code:[/bold] {exc.response.status_code}\n"
-            f"[bold]Reason:[/bold]      {exc.response.reason}\n"
-            f"[bold]Text:[/bold]        {exc.response.text or 'N/A'}",
-            title="Error details"
-        ))
+        console.print(
+            Panel(
+                f"[bold]URL:[/bold]         {exc.response.url}\n"
+                f"[bold]Status Code:[/bold] {exc.response.status_code}\n"
+                f"[bold]Reason:[/bold]      {exc.response.reason}\n"
+                f"[bold]Text:[/bold]        {exc.response.text or 'N/A'}",
+                title="Error details",
+            )
+        )
     else:
-        console.print(Panel(
-            f"[bold]Error:[/bold] {exc}"
-        ))
+        console.print(Panel(f"[bold]Error:[/bold] {exc}"))
+
 
 @click.group(name="endoflife")
 @click.pass_context
 def endoflife(ctx: click.Context) -> None:
     """Query end-of-life information for software products and frameworks."""
     ctx.ensure_object(dict)
+
 
 @endoflife.command()
 @click.pass_context
@@ -68,40 +71,26 @@ def endpoints(ctx: click.Context) -> None:
         )
     except (HTTPError, ConnectionError, RequestException) as exc:
         _handle_request_error(exc)
-        raise click.Abort()
+        raise click.Abort() from exc
 
     table = Table(title="Main endoflife.date API endpoints")
     table.add_column("Name", style="bold cyan")
     table.add_column("URI")
     for r in results:
-        table.add_row(
-            r["name"],
-            r["uri"]
-        )
+        table.add_row(r["name"], r["uri"])
 
     console.print(table)
 
+
 @endoflife.command()
-@click.option(
-    "--product",
-    "-p",
-    default=None,
-    type=str,
-    help="Get a specific product's detail."
-)
-@click.option(
-    "--release",
-    "-r",
-    default=None,
-    type=str,
-    help="Pin a specific product release."
-)
+@click.option("--product", "-p", default=None, type=str, help="Get a specific product's detail.")
+@click.option("--release", "-r", default=None, type=str, help="Pin a specific product release.")
 @click.option(
     "--full",
     "-f",
     default=False,
     is_flag=True,
-    help="Get a full output of all products. (Does not work with --release)"
+    help="Get a full output of all products. (Does not work with --release)",
 )
 @click.pass_context
 def products(ctx, product, release, full):
@@ -120,7 +109,10 @@ def products(ctx, product, release, full):
     """
     multi_product = True
     if product and full:
-        console.print("[bold error]Invalid options.[/bold error] --product and --full cannot be set simultaneously.")
+        console.print(
+            "[bold error]Invalid options.[/bold error] --product and --full "
+            "cannot be set simultaneously."
+        )
         raise click.Abort()
 
     products = []
@@ -136,7 +128,7 @@ def products(ctx, product, release, full):
         console.print(f"Found [bold green]{len(products)}[/bold green] result(s).")
     except (HTTPError, ConnectionError, RequestException) as exc:
         _handle_request_error(exc)
-        raise click.Abort(exc)
+        raise click.Abort(exc) from exc
 
     if multi_product:
         table = Table(title="Product information")
@@ -167,23 +159,20 @@ def products(ctx, product, release, full):
                 p["label"],
                 p["releaseDate"],
                 "Yes" if p["isLts"] else "No",
-                f"[bold red]Yes (ended {p['eoasFrom']})[/bold red]" if p["isEoas"] else \
-                    f"[bold green]No (ends {p['eoasFrom']})[/bold green]",
-                f"[bold red]Yes (ended {p['eolFrom']})[/bold red]" if p["isEol"] else \
-                    f"[bold green]No (ends {p['eolFrom']})[/bold green]",
+                f"[bold red]Yes (ended {p['eoasFrom']})[/bold red]"
+                if p["isEoas"]
+                else f"[bold green]No (ends {p['eoasFrom']})[/bold green]",
+                f"[bold red]Yes (ended {p['eolFrom']})[/bold red]"
+                if p["isEol"]
+                else f"[bold green]No (ends {p['eolFrom']})[/bold green]",
                 "Yes" if p["isMaintained"] else "No",
             )
 
     console.print(table)
 
+
 @endoflife.command()
-@click.option(
-    "--category",
-    "-c",
-    default=None,
-    type=str,
-    help="Get a specific category's results."
-)
+@click.option("--category", "-c", default=None, type=str, help="Get a specific category's results.")
 @click.pass_context
 def categories(ctx, category):
     """Query product categories and their members.
@@ -201,7 +190,7 @@ def categories(ctx, category):
             products = result["result"]
         except (HTTPError, ConnectionError, RequestException) as exc:
             _handle_request_error(exc)
-            raise click.Abort(exc)
+            raise click.Abort(exc) from exc
 
         table = Table(title=f"Products in category {category}")
         table.add_column("Product", style="bold cyan")
@@ -209,18 +198,14 @@ def categories(ctx, category):
         table.add_column("URI")
 
         for p in products:
-            table.add_row(
-                p["label"],
-                ", ".join(p["tags"]),
-                p["uri"]
-            )
+            table.add_row(p["label"], ", ".join(p["tags"]), p["uri"])
     else:
         try:
             result = adapter.get_categories()
             categories = result["result"]
         except (HTTPError, ConnectionError, RequestException) as exc:
             _handle_request_error(exc)
-            raise click.Abort(exc)
+            raise click.Abort(exc) from exc
 
         table = Table(title="Categories")
         table.add_column("Name", style="bold cyan")
@@ -233,14 +218,9 @@ def categories(ctx, category):
             )
     console.print(table)
 
+
 @endoflife.command()
-@click.option(
-    "--tag",
-    "-t",
-    default=None,
-    type=str,
-    help="Get a specific tag's results."
-)
+@click.option("--tag", "-t", default=None, type=str, help="Get a specific tag's results.")
 @click.pass_context
 def tags(ctx, tag):
     """Query product tags and their members.
@@ -258,7 +238,7 @@ def tags(ctx, tag):
             products = result["result"]
         except (HTTPError, ConnectionError, RequestException) as exc:
             _handle_request_error(exc)
-            raise click.Abort(exc)
+            raise click.Abort(exc) from exc
 
         table = Table(title=f"Products in category {tag}")
         table.add_column("Product", style="bold cyan")
@@ -267,19 +247,14 @@ def tags(ctx, tag):
         table.add_column("URI")
 
         for p in products:
-            table.add_row(
-                p["label"],
-                p["category"],
-                ", ".join(p["tags"]),
-                p["uri"]
-            )
+            table.add_row(p["label"], p["category"], ", ".join(p["tags"]), p["uri"])
     else:
         try:
             result = adapter.get_tags()
             tags = result["result"]
         except (HTTPError, ConnectionError, RequestException) as exc:
             _handle_request_error(exc)
-            raise click.Abort(exc)
+            raise click.Abort(exc) from exc
 
         table = Table(title="Categories")
         table.add_column("Name", style="bold cyan")

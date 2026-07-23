@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced method documentation for all classes with Parameters and Returns sections
 - Detailed README with comprehensive usage examples and project structure
 - CHANGELOG.md for tracking version history and changes
+- Interactive command group (`interact`) for user engagement with random prompts
+- Interactive name-based response system for personalized user interactions
+- IO simulation command group (`io`) for demonstrating download and process operations
+- `InteractAdapter` class for managing interactive prompts and responses
+- `IOAdapter` class for IO operation simulations with progress tracking
 
 ### Changed
 
@@ -21,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `pyproject.toml` to reference `cli` package instead of `clitool`
 - Improved Status class and command docstrings with clearer parameter documentation
 - Enhanced CLI function documentation with parameter types and exceptions
+- Expanded README with usage examples for interact and IO commands
 
 ### Removed
 

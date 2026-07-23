@@ -3,14 +3,10 @@
 Contains version information and package name constants used throughout the CLI.
 """
 
-from importlib.metadata import (
-    PackageNotFoundError,
-    version
-)
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
-
-__pkgname__ = 'python-cli-template'
+__pkgname__ = "python-cli-template"
 __location__ = Path(__file__).resolve().parent
 
 try:
