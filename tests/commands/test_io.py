@@ -1,7 +1,7 @@
 """Unit tests for io command group."""
 
+
 import pytest
-from unittest.mock import patch
 from click.testing import CliRunner
 
 from cli.commands.io import io

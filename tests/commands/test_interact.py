@@ -1,7 +1,8 @@
 """Unit tests for interact command group."""
 
-import pytest
 from unittest.mock import patch
+
+import pytest
 from click.testing import CliRunner
 
 from cli.commands.interact import interact

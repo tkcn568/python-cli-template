@@ -2,7 +2,7 @@
 
 import pytest
 
-from cli.adapters.interact import InteractAdapter, PROMPTS
+from cli.adapters.interact import PROMPTS, InteractAdapter
 
 
 class TestInteractAdapter:
