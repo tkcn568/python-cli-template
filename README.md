@@ -278,4 +278,4 @@ Contributions are welcome! Please feel free to submit pull requests or open issu
 
 ### AI-Assisted Development
 
-This project may include AI-assisted contributions for documentation, testing, and docstring enhancement. See [CLAUDE.md](CLAUDE.md) for detailed guidelines on what AI systems can and cannot modify in this codebase.
+This project may include AI-assisted contributions for documentation, testing, and docstring enhancement. See [AGENTS.md](AGENTS.md) for detailed guidelines on what AI systems can and cannot modify in this codebase.
